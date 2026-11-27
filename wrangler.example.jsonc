@@ -1,0 +1,44 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	// Made from wrangler.example.jsonc by `npm run setup`. Every per-install value is one of the <placeholders> below.
+	// Top level = LOCAL DEV ONLY: no workers.dev, no routes, so a bare `wrangler deploy` is reachable by nobody.
+	// R2 and D1 are the real (remote) resources even in `wrangler dev`, so local tests write real files.
+	// Production is env.production (your hostname, behind Cloudflare Access): `npm run deploy`.
+	// Secrets (not in this file): ACCESS_AUD (unset = every request 401), ACCESS_SERVICE_CLIENT_IDS (the CLI's token).
+	"name": "<APP_NAME>-dev",
+	"account_id": "<ACCOUNT_ID>",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-11-01",
+	"observability": { "enabled": true },
+	"workers_dev": false,
+	"preview_urls": false,
+	// run_worker_first: every page and script passes the Access JWT check first.
+	"assets": { "directory": "./public", "binding": "ASSETS", "run_worker_first": true, "not_found_handling": "none" },
+	"r2_buckets": [{ "binding": "BUCKET", "bucket_name": "<BUCKET>", "remote": true }],
+	"d1_databases": [
+		{ "binding": "DB", "database_name": "<D1_NAME>", "database_id": "<D1_ID>", "migrations_dir": "migrations", "remote": true }
+	],
+	"vars": {
+		"ACCESS_TEAM_DOMAIN": "<TEAM_DOMAIN>",
+		// Local dev only (the fake Access in scripts/local-access.mjs signs a JWT for the first email).
+		"OWNER_EMAILS": "<OWNER_EMAILS>"
+	},
+	"env": {
+		"production": {
+			"name": "<APP_NAME>",
+			"workers_dev": false,
+			"preview_urls": false,
+			"routes": [{ "pattern": "<HOSTNAME>", "custom_domain": true }],
+			"r2_buckets": [{ "binding": "BUCKET", "bucket_name": "<BUCKET>" }],
+			"d1_databases": [
+				{ "binding": "DB", "database_name": "<D1_NAME>", "database_id": "<D1_ID>", "migrations_dir": "migrations" }
+			],
+			"vars": {
+				"ACCESS_TEAM_DOMAIN": "<TEAM_DOMAIN>",
+				// ── WHO CAN SIGN IN ── comma-separated emails. After changing it, run `npm run deploy`
+				// (it updates the Access policy and the Worker's own check together).
+				"OWNER_EMAILS": "<OWNER_EMAILS>"
+			}
+		}
+	}
+}

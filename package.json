@@ -1,0 +1,29 @@
+{
+  "name": "photo-app",
+  "description": "Self-hosted private photo and video library for a family: Cloudflare Workers + R2 + D1, behind Cloudflare Access",
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "deploy": "node scripts/deploy.mjs",
+    "access-setup": "node scripts/deploy.mjs --access",
+    "photos": "node cli/photos.mjs",
+    "dev": "wrangler dev --port 8788",
+    "local-access": "node scripts/local-access.mjs 8797",
+    "migrate": "wrangler d1 migrations apply DB --remote",
+    "typecheck": "tsc",
+    "export-public": "node scripts/export-public.mjs"
+  },
+  "type": "module",
+  "dependencies": {
+    "hono": "^4.13.19"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261121.1",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.166.0"
+  },
+  "private": true,
+  "bin": {
+    "photos": "cli/photos.mjs"
+  },
+  "license": "MIT"
+}

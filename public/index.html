@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Photos</title>
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<header class="bar">
+  <nav class="spaces" role="tablist">
+    <button role="tab" data-space="family" class="active">Family</button>
+    <button role="tab" data-space="library">Library</button>
+    <button role="tab" data-view="groups">Groups</button>
+  </nav>
+  <div class="filters">
+    <select id="tag" aria-label="Filter by tag"><option value="">All tags</option></select>
+    <select id="social" aria-label="Social pool filter">
+      <option value="">Everything</option>
+      <option value="1">OK for social</option>
+      <option value="0">Not for social</option>
+    </select>
+    <label class="check"><input type="checkbox" id="archived"> Archived</label>
+  </div>
+  <div class="grouphead" id="grouphead" hidden>
+    <a href="#groups" class="back">‹ Groups</a>
+    <h1 id="group-name"></h1>
+    <button id="group-share" class="primary">Share all</button>
+    <button id="group-rename">Rename</button>
+    <button id="group-delete" class="danger">Delete group</button>
+  </div>
+  <button id="select" class="select-btn" aria-pressed="false">Select</button>
+  <div class="upload">
+    <input id="upload-tags" placeholder="Tags for this upload" aria-label="Tags for this upload (comma-separated, applied to every file)" title="Comma-separated, applied to every file you pick next" autocomplete="off" list="taglist">
+    <label class="upload-btn">Upload<input type="file" id="files" accept="image/*,video/*" multiple hidden></label>
+  </div>
+</header>
+<div id="uploads" class="uploads" hidden></div>
+<main>
+  <p id="empty" class="empty" hidden>Nothing here yet. Upload photos or videos with the button above, or with the CLI for big files.</p>
+  <div id="grid" class="grid"></div>
+  <button id="more" class="more" hidden>Load more</button>
+  <p id="end" class="end" hidden></p>
+  <div id="groups" class="groups" hidden></div>
+</main>
+
+<div id="selbar" class="selbar" hidden>
+  <span id="sel-count">0 selected</span>
+  <button id="sel-share" class="primary">Share</button>
+  <button id="sel-group">Add to group</button>
+  <button id="sel-remove" hidden>Remove from group</button>
+  <button id="sel-done">Done</button>
+</div>
+
+<dialog id="groupdlg" class="sheet">
+  <h2>Add <span id="gd-count"></span> to a group</h2>
+  <form id="gd-new"><input id="gd-name" placeholder="New group name" autocomplete="off" maxlength="120"><button class="primary">Create</button></form>
+  <div id="gd-list" class="gd-list"></div>
+  <button id="gd-cancel">Cancel</button>
+</dialog>
+
+<dialog id="sharedlg" class="sheet">
+  <h2 id="sd-title">Share</h2>
+  <p id="sd-status" class="meta"></p>
+  <progress id="sd-progress" max="1" value="0"></progress>
+  <label class="check"><input type="checkbox" id="sd-orig"> Send full-size originals (much bigger; WhatsApp shrinks them anyway)</label>
+  <button id="sd-go" class="primary big" disabled>Share</button>
+  <p class="note">Sends copies from this device through its share sheet (WhatsApp, Facebook, Messages, AirDrop…). Nothing in the app becomes public.</p>
+  <button id="sd-cancel">Close</button>
+</dialog>
+
+<div id="toast" class="toast" hidden></div>
+
+<dialog id="lightbox">
+  <div class="lb-media" id="lb-media"></div>
+  <aside class="lb-side">
+    <div class="lb-top">
+      <button id="lb-prev" aria-label="Previous">‹</button>
+      <button id="lb-next" aria-label="Next">›</button>
+      <button id="lb-close" aria-label="Close">✕</button>
+    </div>
+    <h2 id="lb-name"></h2>
+    <p id="lb-meta" class="meta"></p>
+    <div class="tags" id="lb-tags"></div>
+    <form id="lb-tagform"><input id="lb-tag" placeholder="Add a tag" autocomplete="off" list="taglist"><button>Add</button></form>
+    <datalist id="taglist"></datalist>
+    <label class="toggle"><input type="checkbox" id="lb-social"> <span>OK for social</span></label>
+    <p id="lb-social-note" class="note" hidden>Family items stay out of the social pool. Move it to Library first.</p>
+    <div class="actions">
+      <button id="lb-archive"></button>
+      <button id="lb-move"></button>
+      <button id="lb-share">Share</button>
+      <a id="lb-download" download>Download original</a>
+      <button id="lb-delete" class="danger">Delete</button>
+    </div>
+  </aside>
+</dialog>
+<script src="/app.js" type="module"></script>
+</body>
+</html>

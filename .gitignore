@@ -1,0 +1,10 @@
+node_modules/
+.wrangler/
+.dev.vars
+*.jwt
+.DS_Store
+.playwright-mcp/
+docs/screenshots/
+.gate-archive/
+# made by `npm run setup`; holds your account's ids
+wrangler.jsonc
