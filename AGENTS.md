@@ -14,7 +14,7 @@ Read [README.md](README.md) for what the app is. The by-hand version of these st
   `~/.config/photos/credentials.env` (keep it `chmod 600`). Never put one on a command line that gets echoed, in a
   file in this repo, or in chat.
 - **`wrangler.jsonc` holds this install's account id, database id, hostname and emails.** It's made by `npm run setup`.
-  Don't commit it to a public fork; the public export (`npm run export-public`) leaves it out.
+  It's in `.gitignore`; keep it out of any public fork.
 - **Never make the R2 bucket public** or add a public URL, `workers_dev` or `preview_urls`. Every byte must go through
   the Worker, behind Access.
 - **Never run `wrangler login`.** Use an API token, as described below.
@@ -142,6 +142,11 @@ only the human verified (the browser login).
 Never move items from Library into Family, or turn on OK-for-social, unless the human asked for those specific items.
 
 ## Changing the code
+
+- **If your human's fork is public,** run `npm run hooks` once. It installs a pre-push check (`scripts/leak-check.mjs`)
+  that blocks a push containing their account ids, hostname, emails, home-directory paths, or anything they list in
+  `~/.config/photos/leak-deny.txt`. Also set a repo-local git identity that doesn't expose a personal email
+  (`git config user.email <id>+<user>@users.noreply.github.com`).
 
 - `src/index.ts` is the Worker; `public/` is the web page (no build step); `cli/photos.mjs` is the uploader;
   `migrations/` is the D1 schema. Add a new numbered migration rather than editing an old one.

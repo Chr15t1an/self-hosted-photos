@@ -72,6 +72,6 @@ scripts/setup.mjs         one-time setup: bucket, database, wrangler.jsonc
 scripts/deploy.mjs        login + uploader token + database + deploy + smoke test
 scripts/config.mjs        shared settings and credentials lookup
 scripts/local-access.mjs  a stand-in Access login for local development
-scripts/export-public.mjs a clean, history-free copy of the repo for sharing
+scripts/leak-check.mjs    blocks a push that would publish install-specific or personal details
 wrangler.example.jsonc    the template setup fills in
 ```

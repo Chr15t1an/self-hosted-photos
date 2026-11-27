@@ -10,7 +10,8 @@
     "local-access": "node scripts/local-access.mjs 8797",
     "migrate": "wrangler d1 migrations apply DB --remote",
     "typecheck": "tsc",
-    "export-public": "node scripts/export-public.mjs"
+    "leak-check": "node scripts/leak-check.mjs",
+    "hooks": "node scripts/leak-check.mjs --install-hook"
   },
   "type": "module",
   "dependencies": {
